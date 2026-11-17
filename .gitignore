@@ -1,0 +1,19 @@
+# Never track populated environment files or local credentials.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local recovery files.
+*.bak
+*.backup
+
+# Copilot runtime and machine-specific state are not customization sources.
+/.copilot/mcp-config.json
+/.copilot/config.json
+/.copilot/session-state/
+/.copilot/logs/
+/.copilot/ide/
+/.copilot/mcp-oauth-config.json
+/.copilot/mcp-oauth/
