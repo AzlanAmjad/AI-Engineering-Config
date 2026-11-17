@@ -25,7 +25,7 @@ Clone this repository to a stable location, open it with an agent, and request:
 
 The agent discovers the appropriate native destinations for the actual host, clients, and any `COPILOT_HOME` override. It links individual managed files and skill directories, not the whole Copilot home. If symlinks are unavailable, it copies and reports the refresh requirement.
 
-MCP setup is optional. Before enabling servers, select which ones you want and complete the secret/authentication setup below. An existing literal credential must never be copied into this repository.
+MCP setup is optional. Select which server definitions to install. Context7's API key is not required to install its MCP definition, but the variable reference must resolve in the Copilot process for authenticated use. Notion requires a separate local OAuth sign-in before use. An existing literal credential must never be copied into this repository.
 
 Existing configuration is compared first. Correct links/content are left alone; conflicting files or MCP entries require confirmation and an external backup. Old active copies, such as Caveman Mode under modular instructions or Context7 under another skills root, must be reconciled so the same customization is not loaded twice.
 
@@ -69,7 +69,7 @@ There are no prompt files to migrate. Use skills for reusable workflows in the c
 
 | Server | Authentication | Enabled tools |
 | --- | --- | --- |
-| `context7` | API key via `COPILOT_MCP_CONTEXT7_API_KEY` | `resolve-library-id`, `query-docs` |
+| `context7` | API key via `COPILOT_MCP_CONTEXT7_API_KEY` (runtime; not required to install) | `resolve-library-id`, `query-docs` |
 | `notion` | Interactive OAuth against Notion's hosted MCP service | All server tools, including write capabilities; enable only if wanted |
 
 The installation agent merges selected entries into the native user MCP configuration (normally `~/.copilot/mcp-config.json`, subject to host discovery and overrides). It must not replace unrelated servers or symlink that entire mutable file into this repository. Built-in GitHub and Playwright capabilities are not duplicated.
@@ -81,7 +81,7 @@ The installation agent merges selected entries into the native user MCP configur
 3. Explicitly load it into the environment that launches Copilot, VS Code, or the relevant Agent Host on the execution machine. Copilot does not automatically read `.env` files; the portable format has no `envFile` or editor secret-input bridge.
 4. Restart the affected host/client if necessary. Exporting a variable in a separate terminal does not update an already-running editor or remote agent.
 
-The committed reference remains `"Bearer ${COPILOT_MCP_CONTEXT7_API_KEY}"`; never substitute the secret into a tracked or generated configuration. An unset or empty value is incomplete setup: leave Context7 uninstalled/disabled and report it, rather than treating an unauthenticated connection as success.
+The committed reference remains `"Bearer ${COPILOT_MCP_CONTEXT7_API_KEY}"`; never substitute the secret into a tracked or generated configuration. An unset or empty value does not prevent installing Context7's MCP definition, but it prevents authenticated use until the variable is available to the process launching Copilot. Tell the user how to provide it, and do not treat an unauthenticated connection as success.
 
 Complete Notion's OAuth sign-in through the local client's authentication flow. OAuth tokens remain client-managed and are not synchronized here. Local authorization does not imply cloud authorization.
 
